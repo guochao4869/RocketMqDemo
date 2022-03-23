@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -152,5 +153,27 @@ public class TestController {
             callback();
         }
         return new Result(true, 1, "成功");
+    }
+
+    @RequestMapping("/rocketmqTest3")
+    public Result rocketmqTest3(@RequestBody Map<String, Object> map) throws Exception {
+        Object meg = (Object) map.get("meg");
+        if (meg == null) {
+            Assert.hasText("meg", "参数为空");
+        }
+        Message message = new Message(MyCode.TOPIC, "testtag", meg.toString().getBytes());
+        SendResult send = producer.getDefaultMQProducer().send(message);
+        log.info("=============================");
+        log.info("发信的信息为:{}", meg);
+        log.info("消息体为:{}", send);
+        return new Result(true, 1, "成功");
+    }
+
+    public static void main(String[] args) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("data", "123");
+        map.put("dat2", "1234");
+        byte[] bytes = map.toString().getBytes();
+        System.out.println(bytes);
     }
 }

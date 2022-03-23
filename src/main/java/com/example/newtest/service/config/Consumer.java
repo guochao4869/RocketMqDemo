@@ -1,5 +1,8 @@
 package com.example.newtest.service.config;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.example.newtest.service.code.MyCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
@@ -10,7 +13,9 @@ import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 消费者
@@ -42,6 +47,9 @@ public class Consumer {
                 String body = "";
                 try {
                     body = new String(messageExt.getBody(), "utf-8");
+                    JSONObject o = JSONObject.parseObject(messageExt.getBody(), JSONObject.class);
+                    log.info("=============================================================");
+                    log.info("消费者开始消费:{}", o);
                 }catch (Exception e) {
                     e.printStackTrace();
                     log.error("字符串转化失败");

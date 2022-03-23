@@ -1,0 +1,32 @@
+server:
+  port: 10086
+
+springfox.documentation.swagger.v2.path: /api-docs
+
+#微信支付
+applets:
+  app:
+    id: wx7c81da558e898099
+key:
+  path: /data/cert/apiclient_cert.p12
+mch:
+  id: 1615108560
+  key: 6acf1bbf7d6b483db22f4f7a6cf19651
+wx:
+  app:
+    id: wxe6633e06cd31d652
+  notify:
+    url: http://39.100.243.103:8081/ljDecoration/stoneTypeCount
+
+#配置文件上传目录
+web:
+  upload:
+    linux: /root/file
+    window: d:/data
+
+spring:
+  application:
+    name: rocket-mq
+  profiles:
+    active: dev
+
